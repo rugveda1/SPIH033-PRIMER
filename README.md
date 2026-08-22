@@ -1,3 +1,13 @@
+---
+title: Ai TutorApp
+emoji: 🧠
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # AI Tutor Frontend Prototype 🧠🎓
 
 Welcome to the **AI Tutor** project! This is a premium, storytelling-driven frontend prototype for an adaptive, AI-powered Learning Management System (LMS). 
