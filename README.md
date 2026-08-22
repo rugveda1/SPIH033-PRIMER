@@ -1,16 +1,53 @@
-# React + Vite
+# AI Tutor Frontend Prototype 🧠🎓
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Welcome to the **AI Tutor** project! This is a premium, storytelling-driven frontend prototype for an adaptive, AI-powered Learning Management System (LMS). 
 
-Currently, two official plugins are available:
+It was built with React, Vite, and vanilla CSS to create an immersive, dynamic, and personalized user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+You can try out the fully working frontend prototype live right now:
+**👉 [Play with the Live Demo on Hugging Face](https://huggingface.co/spaces/rugvedaa/Ai-tutorApp)**
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 📖 About The Project
+Traditional education gives students the same content, pace, and difficulty. AI Tutor envisions a future where the platform understands each student's performance, identifies weaknesses, adapts difficulty, provides personalized explanations, and continuously improves the learning journey.
+
+### Features Highlighted in Prototype:
+- **Storytelling Flow:** A visual journey explaining the shift from traditional LMS to Adaptive AI.
+- **Intelligence Pipeline:** Visualizing how the AI understands, adapts, and teaches.
+- **Socratic AI Tutoring Mockups:** Shows realistic interactions breaking down complex topics.
+- **Modern LMS Dashboard:** Courses, Progress tracking, and Weak Topic identification.
+- **Immersive Onboarding:** A signup flow designed to understand the learner before they even start.
+- **Premium Design:** Dark mode aesthetics with glassmorphism, fluid animations, and a polished UI.
+
+## 🛠️ Built With
+- React
+- Vite
+- Framer Motion (Animations)
+- Lucide React (Icons)
+- Vanilla CSS
+
+## 💻 Running Locally
+
+If you'd like to run this on your own machine:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rugveda1/SPIH033-PRIMER.git
+   ```
+2. Navigate into the directory:
+   ```bash
+   cd SPIH033-PRIMER
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
