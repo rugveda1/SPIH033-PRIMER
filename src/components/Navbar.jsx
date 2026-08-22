@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BrainCircuit, Menu, X } from 'lucide-react';
+import { BrainCircuit, Menu, X, LogOut, User } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import Button from './Button';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -23,14 +25,20 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'How It Works', path: '/#how-it-works' },
-    { name: 'Features', path: '/#features' },
-    { name: 'LMS', path: '/dashboard' },
-    { name: 'Community', path: '/#community' },
-    { name: 'FAQ', path: '/#faq' },
-  ];
+  const navLinks = user 
+    ? [
+        { name: 'Dashboard', path: '/dashboard' },
+        { name: 'Mastery Map', path: '/courses' },
+        { name: 'Socratic Tutor', path: '/tutor' },
+        { name: 'Progress Stats', path: '/progress' },
+        { name: 'Profile', path: '/profile' },
+      ]
+    : [
+        { name: 'Home', path: '/' },
+        { name: 'How It Works', path: '/#how-it-works' },
+        { name: 'Features', path: '/#features' },
+        { name: 'FAQ', path: '/#faq' },
+      ];
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -48,14 +56,38 @@ const Navbar = () => {
           ))}
           
           <div className="navbar-actions-mobile">
-            <Button variant="ghost" to="/login">Log In</Button>
-            <Button variant="primary" to="/signup">Start Learning</Button>
+            {user ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+                <span className="text-sm text-muted">Class {user.class_level} • {user.name}</span>
+                <Button variant="ghost" onClick={logout} className="w-full">
+                  <LogOut size={16} style={{ marginRight: '8px' }} /> Log Out
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="ghost" to="/login">Log In</Button>
+                <Button variant="primary" to="/signup">Start Learning</Button>
+              </>
+            )}
           </div>
         </nav>
 
         <div className="navbar-actions">
-          <Button variant="ghost" to="/login">Log In</Button>
-          <Button variant="primary" to="/signup">Start Learning</Button>
+          {user ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <span className="text-muted" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                <User size={16} /> Class {user.class_level} • {user.name}
+              </span>
+              <Button variant="ghost" onClick={logout}>
+                <LogOut size={16} style={{ marginRight: '8px' }} /> Log Out
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button variant="ghost" to="/login">Log In</Button>
+              <Button variant="primary" to="/signup">Start Learning</Button>
+            </>
+          )}
         </div>
 
         <button 

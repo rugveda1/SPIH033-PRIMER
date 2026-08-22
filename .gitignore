@@ -12,6 +12,31 @@ dist
 dist-ssr
 *.local
 
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+*.env
+backend/.env
+
+# Python / Pytest cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Agent / Tool cache
+.gemini/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +47,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+

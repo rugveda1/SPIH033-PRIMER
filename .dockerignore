@@ -1,0 +1,35 @@
+# Exclude environment variables and secrets
+.env
+.env.*
+!.env.example
+*.env
+backend/.env
+
+# Exclude dependencies and build outputs
+node_modules
+dist
+dist-ssr
+
+# Exclude git repository data
+.git
+.gitignore
+.dockerignore
+
+# Exclude Python cache and virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+
+# Exclude local database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Exclude agent / IDE caches
+.gemini/
+.vscode/
+.idea/

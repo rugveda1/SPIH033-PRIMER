@@ -32,7 +32,7 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-tertiary);
   color: var(--text-secondary);
   transition: all var(--transition-fast);
 }

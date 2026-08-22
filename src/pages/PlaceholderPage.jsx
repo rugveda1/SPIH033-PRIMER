@@ -15,7 +15,7 @@ const PlaceholderPage = ({ title, description }) => {
       textAlign: 'center'
     }}>
       <div className="glass-panel" style={{ padding: '4rem 2rem', maxWidth: '600px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(139, 92, 246, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(14, 165, 233, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Construction size={40} className="text-accent" />
         </div>
         <h1 className="heading-md">{title}</h1>

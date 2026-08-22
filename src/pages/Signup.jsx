@@ -1,164 +1,156 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { BrainCircuit, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BrainCircuit, Mail, Lock, User, GraduationCap } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import './Auth.css';
 
-const questions = [
-  {
-    id: 'current_learning',
-    title: "What are you currently learning?",
-    type: 'text',
-    placeholder: "e.g., Computer Science, Data Science, High School Math"
-  },
-  {
-    id: 'subjects',
-    title: "What subjects do you want help with?",
-    type: 'tags',
-    options: ["Mathematics", "Programming", "Physics", "Chemistry", "Biology", "Languages", "History", "Other"]
-  },
-  {
-    id: 'level',
-    title: "What's your current level?",
-    type: 'radio',
-    options: ["Beginner", "Intermediate", "Advanced"]
-  },
-  {
-    id: 'goal',
-    title: "What is your learning goal?",
-    type: 'text',
-    placeholder: "e.g., Pass my exams, Learn a new skill, Get a job"
-  },
-  {
-    id: 'time',
-    title: "How much time can you study each day?",
-    type: 'radio',
-    options: ["Less than 1 hour", "1-2 hours", "3-4 hours", "5+ hours"]
-  },
-  {
-    id: 'difficult_topics',
-    title: "Which topics are difficult for you?",
-    type: 'text',
-    placeholder: "e.g., Calculus, Pointers in C++, Cell biology"
-  },
-  {
-    id: 'preference',
-    title: "How do you prefer to learn?",
-    type: 'radio',
-    options: ["Visual (Diagrams, videos)", "Text-based (Reading)", "Interactive (Quizzes, coding)", "Audio (Listening)"]
-  }
-];
-
 const Signup = () => {
-  const [step, setStep] = useState(-1); // -1 is the initial account creation step
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [classLevel, setClassLevel] = useState(1);
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const { signup } = useAuth();
+  const navigate = useNavigate();
 
-  const nextStep = () => setStep(prev => Math.min(prev + 1, questions.length));
-  const prevStep = () => setStep(prev => Math.max(prev - 1, -1));
-
-  const renderInitialStep = () => (
-    <>
-      <div className="auth-header text-center">
-        <Link to="/" className="auth-logo">
-          <BrainCircuit className="logo-icon" size={32} />
-        </Link>
-        <h2 className="heading-md mt-4">Create your account</h2>
-        <p className="text-muted mt-2">Start your personalized learning journey</p>
-      </div>
-      
-      <form className="auth-form mt-8">
-        <div className="form-group">
-          <label>Full Name</label>
-          <input type="text" placeholder="John Doe" className="basic-input" />
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="you@example.com" className="basic-input" />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" placeholder="••••••••" className="basic-input" />
-        </div>
-        
-        <Button variant="primary" className="w-full mt-6" type="button" onClick={nextStep}>
-          Create Account
-        </Button>
-      </form>
-      
-      <div className="auth-footer text-center mt-8">
-        <p className="text-muted">
-          Already have an account? <Link to="/login" className="text-accent">Log in</Link>
-        </p>
-      </div>
-    </>
-  );
-
-  const renderOnboardingStep = () => {
-    if (step >= questions.length) {
-      return (
-        <div className="text-center py-8">
-          <div className="success-icon mb-6">
-            <BrainCircuit size={48} className="text-accent mx-auto" />
-          </div>
-          <h2 className="heading-md mb-4">You're all set!</h2>
-          <p className="text-muted mb-8">We've personalized your learning environment based on your answers.</p>
-          <Button variant="primary" to="/dashboard" className="w-full">Go to Dashboard</Button>
-        </div>
-      );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !password) {
+      setError('Please fill in all fields');
+      return;
     }
 
-    const currentQ = questions[step];
+    setError('');
+    setSubmitting(true);
 
-    return (
-      <div className="onboarding-step">
-        <div className="progress-bar-container mb-8">
-          <div className="progress-bar" style={{ width: `${((step + 1) / questions.length) * 100}%` }}></div>
-        </div>
-        
-        <button className="back-btn" onClick={prevStep}><ChevronLeft size={20} /> Back</button>
-        
-        <h2 className="heading-sm mt-6 mb-8">{currentQ.title}</h2>
-        
-        <div className="question-input">
-          {currentQ.type === 'text' && (
-            <input type="text" placeholder={currentQ.placeholder} className="basic-input lg-input" />
-          )}
-          
-          {currentQ.type === 'radio' && (
-            <div className="radio-group">
-              {currentQ.options.map(opt => (
-                <label key={opt} className="radio-label">
-                  <input type="radio" name={currentQ.id} />
-                  <span>{opt}</span>
-                </label>
-              ))}
-            </div>
-          )}
-          
-          {currentQ.type === 'tags' && (
-            <div className="tags-group">
-              {currentQ.options.map(opt => (
-                <label key={opt} className="tag-label">
-                  <input type="checkbox" name={currentQ.id} />
-                  <span>{opt}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-        
-        <div className="mt-10 flex justify-end">
-          <Button variant="primary" onClick={nextStep}>
-            Next <ChevronRight size={18} />
-          </Button>
-        </div>
-      </div>
-    );
+    try {
+      const success = await signup(name, email, password, classLevel);
+      if (success) {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError(err.message || 'Registration failed');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-container glass-panel">
-        {step === -1 ? renderInitialStep() : renderOnboardingStep()}
+        <div className="auth-header text-center">
+          <Link to="/" className="auth-logo">
+            <BrainCircuit className="logo-icon" size={32} />
+          </Link>
+          <h2 className="heading-md mt-4">Create your account</h2>
+          <p className="text-muted mt-2">Start your personalized mathematics learning journey</p>
+        </div>
+
+        {error && (
+          <div style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid var(--error)',
+            color: 'var(--error)',
+            padding: '0.75rem',
+            borderRadius: 'var(--radius-sm)',
+            marginTop: '1.5rem',
+            fontSize: '0.875rem',
+            textAlign: 'center'
+          }}>
+            {error}
+          </div>
+        )}
+
+        <form className="auth-form mt-8" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Full Name</label>
+            <div className="input-with-icon">
+              <User size={18} className="input-icon" />
+              <input 
+                type="text" 
+                placeholder="John Doe" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Email</label>
+            <div className="input-with-icon">
+              <Mail size={18} className="input-icon" />
+              <input 
+                type="email" 
+                placeholder="you@example.com" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <div className="input-with-icon">
+              <Lock size={18} className="input-icon" />
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Select Mathematics Class Level</label>
+            <div className="input-with-icon">
+              <GraduationCap size={18} className="input-icon" />
+              <select 
+                value={classLevel} 
+                onChange={(e) => setClassLevel(Number(e.target.value))}
+                style={{
+                  width: '100%',
+                  padding: '0.875rem 1rem',
+                  paddingLeft: '2.75rem',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  color: 'var(--text-primary)',
+                  outline: 'none',
+                  fontSize: '1rem',
+                  appearance: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value={1} style={{ background: '#18181b' }}>Class 1 (Counting & Addition Intro)</option>
+                <option value={2} style={{ background: '#18181b' }}>Class 2 (Skip Counting & 2-Digit Math)</option>
+                <option value={3} style={{ background: '#18181b' }}>Class 3 (Multiplication & Decimals Intro)</option>
+                <option value={4} style={{ background: '#18181b' }}>Class 4 (Long Division & Geometry)</option>
+                <option value={5} style={{ background: '#18181b' }}>Class 5 (Fractions, Percentages & Word Problems)</option>
+              </select>
+            </div>
+          </div>
+
+          <Button 
+            variant="primary" 
+            className="w-full mt-6" 
+            type="submit"
+            disabled={submitting}
+          >
+            {submitting ? 'Registering...' : 'Create Account & Start'}
+          </Button>
+        </form>
+
+        <div className="auth-footer text-center mt-8">
+          <p className="text-muted">
+            Already have an account? <Link to="/login" className="text-accent">Log in</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

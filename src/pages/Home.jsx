@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, Target, TrendingUp, BookOpen, MessageSquare, 
   BarChart, Sparkles, Zap, ChevronDown, CheckCircle2,
-  GraduationCap, Clock, MonitorPlay, Users, Star
+  GraduationCap, Clock
 } from 'lucide-react';
 import Button from '../components/Button';
 import FeatureCard from '../components/FeatureCard';
